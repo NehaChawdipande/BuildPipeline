@@ -9,6 +9,10 @@
 }
 .react-flow__panel, .react-flow__panel > svg{
     border-radius: 1rem;
-} .react-flow__minimap-node{
+} 
+.react-flow__minimap-node{
     fill: rgb(188, 188, 188);
+}
+.react-flow__edge-path{
+    stroke: #fff;
 }

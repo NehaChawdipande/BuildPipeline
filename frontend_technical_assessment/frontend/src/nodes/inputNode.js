@@ -21,14 +21,17 @@ export const InputNode = ({ id, data }) => {
           <input 
             type="text" 
             value={currName} 
-            onChange={handleNameChange} 
+            onChange={handleNameChange}
+            className='commonBoxStyle'
           />
         </label>
         <label>
           Type:
-          <select value={inputType} onChange={handleTypeChange}>
+          <select value={inputType} onChange={handleTypeChange}
+            className='dropdown'
+            >
             <option value="Text">Text</option>
-            <option value="File">File</option>
+            <option value="File">Image</option>
           </select>
         </label>
     </Node>

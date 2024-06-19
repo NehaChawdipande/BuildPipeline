@@ -4,8 +4,8 @@ import { useState } from 'react';
 import Node from './Node';
 
 export const OutputNode = ({ id, data }) => {
-  const [currName, setCurrName] = useState(data?.outputName || id.replace('customOutput-', 'output_'));
-  const [outputType, setOutputType] = useState(data.outputType || 'Text');
+  const [currName, setCurrName] = useState(data?.outputName || id.replace('customOutput-', 'Output '));
+  const [outputType, setOutputType] = useState(data.outputType || '');
 
   const handleNameChange = (e) => {
     setCurrName(e.target.value);
@@ -22,12 +22,15 @@ export const OutputNode = ({ id, data }) => {
           <input 
             type="text" 
             value={currName} 
-            onChange={handleNameChange} 
+            onChange={handleNameChange}
+            className='commonBoxStyle'
           />
         </label>
         <label>
           Type:
-          <select value={outputType} onChange={handleTypeChange}>
+          <select value={outputType} onChange={handleTypeChange}
+            className='dropdown'
+            >
             <option value="Text">Text</option>
             <option value="File">Image</option>
           </select>
