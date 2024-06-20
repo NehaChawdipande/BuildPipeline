@@ -10,6 +10,8 @@ import { InputNode } from '../nodes/inputNode';
 import { LLMNode } from '../nodes/llmNode';
 import { OutputNode } from '../nodes/outputNode';
 import { TextNode } from '../nodes/textNode';
+// import CustomEdge  from '../customEdge/customEdge';
+
 import './ui.scss';
 import 'reactflow/dist/style.css';
 
@@ -22,6 +24,9 @@ const nodeTypes = {
   text: TextNode,
 };
 
+// const edgeTypes = {
+//   'start-end': CustomEdge,
+// };
 const selector = (state) => ({
   nodes: state.nodes,
   edges: state.edges,
@@ -80,7 +85,7 @@ export const PipelineUI = () => {
             addNode(newNode);
           }
         },
-        [reactFlowInstance]
+        [addNode, getNodeID, reactFlowInstance]
     );
 
     const onDragOver = useCallback((event) => {
@@ -88,6 +93,7 @@ export const PipelineUI = () => {
         event.dataTransfer.dropEffect = 'move';
     }, []);
 
+  
     return (
         <>
         <div className='board' ref={reactFlowWrapper}>

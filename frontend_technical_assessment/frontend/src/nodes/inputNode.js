@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Node from './Node'; 
 
 export const InputNode = ({ id, data }) => {
-  const [currName, setCurrName] = useState(data?.inputName || id.replace('customInput-', 'input_'));
+  const [currName, setCurrName] = useState(data?.inputName || id.replace('customInput-', 'Input '));
   const [inputType, setInputType] = useState(data.inputType || 'Text');
 
   const handleNameChange = (e) => {
@@ -15,7 +15,7 @@ export const InputNode = ({ id, data }) => {
   };
 
   return (
-    <Node id={id} type="Input" targetHandles={3} sourceHandles={2}>
+    <Node id={id} type="Input" targetHandles={[]} sourceHandles={[currName]}>
         <label>
           Name:
           <input 

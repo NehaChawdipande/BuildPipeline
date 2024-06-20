@@ -16,7 +16,7 @@ export const OutputNode = ({ id, data }) => {
   };
 
   return (
-    <Node id={id} type="Output" targetHandles={1} sourceHandles={0}>
+    <Node id={id} type="Output" targetHandles={[currName]} sourceHandles={[]}>
       <label>
           Name:
           <input 
