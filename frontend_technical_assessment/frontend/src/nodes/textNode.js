@@ -24,22 +24,16 @@ export const TextNode = ({ id, data }) => {
     const variableRegex = /\{\{(.*?)\}\}/g; // Regular expression for variable names
 
     const matches = event.target.value.match(variableRegex) || []; // Get all matches (or empty array)
-
+    const temp = [];
     matches.forEach(match => {
       const variableName = match.slice(2, -2); // Extract variable name (remove braces)
-      if (targetHandles.length === 0) {
-        targetHandles.push(`${variableName}`)
-      }
-      else {
-        setTargetHandles(targetHandles.map((handleName) => {
-          if(handleName !== variableName) {
-            targetHandles.push(`${variableName}`)
-          }
-          return targetHandles;
-        }));
+      const found = temp?.find((item) => item === variableName);
+      if (!found) {
+        temp.push(variableName);
       }
     }
     );
+    setTargetHandles(temp);
   }
 
   return (
