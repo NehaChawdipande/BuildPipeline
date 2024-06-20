@@ -16,38 +16,28 @@ export const TextNode = ({ id, data }) => {
     setCurrText(e.target.value);
     textbox.style.height = "auto";
     textbox.style.height = textbox.scrollHeight + "px";
+    checkForVariables(e);
   };
 
 
-  const checkForVariables = (text) => {
+  const checkForVariables = (event) => {
     const variableRegex = /\{\{(.*?)\}\}/g; // Regular expression for variable names
 
-    // Clear any existing variable elements (optional)
-    // const existingVariables = document.querySelectorAll(".variable-handle");
-    // existingVariables.forEach(el => el.remove());
-
-    const matches = text.match(variableRegex) || []; // Get all matches (or empty array)
+    const matches = event.target.value.match(variableRegex) || []; // Get all matches (or empty array)
 
     matches.forEach(match => {
       const variableName = match.slice(2, -2); // Extract variable name (remove braces)
       if (targetHandles.length === 0) {
         targetHandles.push(`${variableName}`)
-        setTargetHandles(targetHandles);
       }
       else {
-        targetHandles.map((handle) => {
-          if (handle === variableName) {
-            return;
-          }
-          else {
+        setTargetHandles(targetHandles.map((handleName) => {
+          if(handleName !== variableName) {
             targetHandles.push(`${variableName}`)
-            setTargetHandles(targetHandles);
-            return;
           }
-        })
+          return targetHandles;
+        }));
       }
-
-      // Validate variable name (you can customize validation logic)
     }
     );
   }
@@ -64,8 +54,7 @@ export const TextNode = ({ id, data }) => {
         className='textBox'
         value={currText}
         placeholder='Start typing..'
-        onChange={handleTextChange}
-        onBlur={(e) => { checkForVariables(e.target.value) }}>
+        onChange={handleTextChange}>
       </textarea>
     </Node>
   );

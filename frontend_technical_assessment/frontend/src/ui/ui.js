@@ -10,6 +10,7 @@ import { InputNode } from '../nodes/inputNode';
 import { LLMNode } from '../nodes/llmNode';
 import { OutputNode } from '../nodes/outputNode';
 import { TextNode } from '../nodes/textNode';
+import Node from '../nodes/Node';
 // import CustomEdge  from '../customEdge/customEdge';
 
 import './ui.scss';
@@ -22,11 +23,13 @@ const nodeTypes = {
   llm: LLMNode,
   customOutput: OutputNode,
   text: TextNode,
+  custom: Node
 };
 
 // const edgeTypes = {
 //   'start-end': CustomEdge,
 // };
+
 const selector = (state) => ({
   nodes: state.nodes,
   edges: state.edges,
