@@ -1,29 +1,46 @@
 // submit.js
 import './submit.scss';
+import { useStore } from '../store';
+import { shallow } from 'zustand/shallow';
+import React, { useState } from 'react';
+import Popup from '../popup/popup';
 
 export const SubmitButton = () => {
-
-const submitPipeline = async () => {
-
-  const data = { nodes: "nodes", edges: "edge"};
-
-  const response = await fetch('http://127.0.0.1:8000/pipelines/parse', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data),
+  const [result, setResult] = useState({});
+  const selector = (state) => ({
+    nodes: state.nodes,
+    edges: state.edges
   });
+  const {
+    nodes,
+    edges
+  } = useStore(selector, shallow);
 
-//   const response = await fetch('http://127.0.0.1:8000/pipelines/parse');
+  const data = { nodes: nodes, edges: edges };
 
-  console.log(response);
-  const responseData = await response.json();
-  //Display alert with num_nodes, num_edges, and is_dag
-  alert(`Nodes: ${responseData.num_nodes}, Edges: ${responseData.num_edges}, DAG: ${responseData.is_dag}`);
-};
 
-    return (
-        <div className="submit" style={{}}>
-            <button type="submit" onClick={()=>submitPipeline()}>Submit</button>
-        </div>
-    );
+  const submitPipeline = async () => {
+
+    const url = new URL('http://127.0.0.1:8000/pipelines/parse');
+    url.searchParams.append('pipeline', JSON.stringify(data));
+
+    await fetch(url, { method: "POST" })
+      .then(response => response.json())
+      .then(data => {
+        // Process the response data
+        setResult(data);
+
+      })
+      .catch(error => {
+        console.error('Error parsing pipeline:', error);
+      });
+  };
+
+  return (
+    <>
+      <div className="submit" style={{}}>
+        <button type="submit" onClick={() => submitPipeline()}>Submit</button>
+      </div>
+      {result.num_nodes && <Popup resultData={result} setVisibility={setResult}></Popup>}</>
+  );
 }
